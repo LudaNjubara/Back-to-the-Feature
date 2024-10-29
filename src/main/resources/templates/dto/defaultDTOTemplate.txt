@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package $SELECTED_DIR_PACKAGE_PATH$;
 
 import lombok.Getter;
 import lombok.Setter;

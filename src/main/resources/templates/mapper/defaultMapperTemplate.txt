@@ -1,8 +1,6 @@
-package com.example.demo.mapper;
+package $SELECTED_DIR_PACKAGE_PATH$;
 
-import com.example.demo.model.$PREFIX_CAPITALIZED$;
-import com.example.demo.dto.$PREFIX_CAPITALIZED$DTO;
-import com.example.demo.request.$PREFIX_CAPITALIZED$Request;
+$IMPORTS$
 
 public class $PREFIX_CAPITALIZED$Mapper {
 

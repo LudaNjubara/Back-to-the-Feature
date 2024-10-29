@@ -2,8 +2,14 @@ package utils;
 
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.search.ProjectScope;
+import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.util.IncorrectOperationException;
 
 import java.io.ByteArrayOutputStream;
@@ -27,7 +33,75 @@ public class CommonUtils {
                 throw new RuntimeException("Error reverting changes: " + e.getMessage());
             }
         });
+    }
 
+    /**
+     * Calculate the package path from the selected directory.
+     *
+     * @param project     the project
+     * @param dir         the parent directory of the file
+     * @param selectedDir the selected directory
+     * @return the package path
+     */
+    public static String calculatePackagePath(Project project, PsiDirectory dir, PsiDirectory selectedDir) {
+        PsiManager psiManager = PsiManager.getInstance(project);
+        StringBuilder packagePath = new StringBuilder();
+
+        // Traverse upwards to find the source root
+        PsiDirectory currentDir = selectedDir;
+        while (currentDir != null && psiManager.findDirectory(currentDir.getVirtualFile()) != null) {
+            if (isSourceRoot(project, currentDir)) {
+                break;
+            }
+            if (!packagePath.isEmpty()) {
+                packagePath.insert(0, ".");
+            }
+            packagePath.insert(0, currentDir.getName());
+            currentDir = currentDir.getParent();
+        }
+
+        // Only append subdirectories if dir and selectedDir are not the same
+        if (!dir.equals(selectedDir)) {
+            appendSubdirectories(selectedDir, dir, packagePath);
+        }
+
+        return packagePath.toString();
+    }
+
+    /**
+     * Append subdirectories to the package path.
+     *
+     * @param selectedDir the selected directory
+     * @param currDir     the current directory
+     * @param packagePath the package path
+     */
+    private static void appendSubdirectories(PsiDirectory selectedDir, PsiDirectory currDir, StringBuilder packagePath) {
+            PsiDirectory dir = selectedDir.findSubdirectory(currDir.getName());
+
+            if (!packagePath.isEmpty()) {
+                packagePath.append(".");
+            }
+
+            assert dir != null;
+            packagePath.append(dir.getName());
+    }
+
+    /**
+     * Check if the directory is a source root.
+     *
+     * @param project the project
+     * @param dir     the directory
+     * @return true if the directory is a source root, false otherwise
+     */
+    private static boolean isSourceRoot(Project project, PsiDirectory dir) {
+        VirtualFile[] sourceRoots = ProjectRootManager.getInstance(project).getContentSourceRoots();
+        VirtualFile dirVirtualFile = dir.getVirtualFile();
+        for (VirtualFile sourceRoot : sourceRoots) {
+            if (sourceRoot.equals(dirVirtualFile)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static byte[] loadFile(String path) {

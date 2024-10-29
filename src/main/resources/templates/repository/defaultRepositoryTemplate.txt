@@ -1,8 +1,9 @@
-package com.example.demo.repository;
+package $SELECTED_DIR_PACKAGE_PATH$;
 
-import com.example.demo.model.$PREFIX_CAPITALIZED$;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+$IMPORTS$
 
 @Repository
 public interface $PREFIX_CAPITALIZED$Repository extends JpaRepository<$PREFIX_CAPITALIZED$, Long> {

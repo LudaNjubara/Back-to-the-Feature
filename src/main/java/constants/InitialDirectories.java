@@ -1,58 +1,57 @@
 package constants;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDirectory;
 import lombok.Getter;
+import model.CreateDirectoryFilesOptions;
 import utils.FilesUtils;
 
 @Getter
 public enum InitialDirectories {
     CONTROLLER("controller", false) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createControllerDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createControllerDirectoryFiles(options);
         }
     },
     MODEL("model", false) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createModelDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createModelDirectoryFiles(options);
         }
     },
     SERVICE("service", false) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createServiceDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createServiceDirectoryFiles(options);
         }
     },
     REPOSITORY("repository", false) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createRepositoryDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createRepositoryDirectoryFiles(options);
         }
     },
     RESPONSE("response", true) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createResponseDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createResponseDirectoryFiles(options);
         }
     },
     REQUEST("request", false) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createRequestDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createRequestDirectoryFiles(options);
         }
     },
     DTO("dto", false) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createDtoDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createDtoDirectoryFiles(options);
         }
     },
     MAPPER("mapper", false) {
         @Override
-        public void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
-            FilesUtils.createMapperDirectoryFiles(project, dir, selectedDir);
+        public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
+            FilesUtils.createMapperDirectoryFiles(options);
         }
     };
 
@@ -64,5 +63,5 @@ public enum InitialDirectories {
         this.isUsedInCombinedFolder = isUsedInCombinedFolder;
     }
 
-    public abstract void createFiles(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception;
+    public abstract void createFiles(CreateDirectoryFilesOptions options) throws Exception;
 }

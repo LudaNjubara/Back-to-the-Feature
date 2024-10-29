@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package $SELECTED_DIR_PACKAGE_PATH$;
 
 import lombok.Data;
 import javax.persistence.*;

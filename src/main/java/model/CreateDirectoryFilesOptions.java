@@ -1,0 +1,9 @@
+package model;
+
+import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiDirectory;
+import lombok.Builder;
+
+@Builder
+public record CreateDirectoryFilesOptions(Project project, PsiDirectory dir, PsiDirectory selectedDir, boolean useSeparateFolders) {
+}

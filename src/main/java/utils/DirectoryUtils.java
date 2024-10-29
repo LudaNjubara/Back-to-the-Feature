@@ -1,12 +1,10 @@
 package utils;
 
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.util.IncorrectOperationException;
 import constants.InitialDirectories;
-import model.InitialDirectoriesOptions;
-import model.PopulateDirectoriesOptions;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +50,12 @@ public class DirectoryUtils {
 
         // populate the parent directory with the initial files first
         if (!options.useSeparateFolders()) {
-            FilesUtils.createInitialFiles(options.project(), options.selectedDir());
+            CreateInitialFilesOptions cifOptions = CreateInitialFilesOptions.builder()
+                    .project(options.project())
+                    .selectedDir(options.selectedDir())
+                    .useSeparateFolders(false)
+                    .build();
+            FilesUtils.createInitialFiles(cifOptions);
         }
 
         // populate the subdirectories with files
@@ -63,27 +66,38 @@ public class DirectoryUtils {
             }
 
             // populate the directory with files
-            populateDirectory(options.project(), dir, options.selectedDir());
+            PopulateDirectoryOptions pdOptions = PopulateDirectoryOptions.builder()
+                    .project(options.project())
+                    .dir(dir)
+                    .selectedDir(options.selectedDir())
+                    .useSeparateFolders(options.useSeparateFolders())
+                    .build();
+            populateDirectory(pdOptions);
         }
     }
 
     /**
      * Populate the directory with corresponding files.
      *
-     * @param project the project
-     * @param dir     the directory
+     * @param options the populate directory options
      * @throws Exception if an error occurs
      */
-    public static void populateDirectory(Project project, PsiDirectory dir, PsiDirectory selectedDir) throws Exception {
+    public static void populateDirectory(PopulateDirectoryOptions options) throws Exception {
+        CreateDirectoryFilesOptions cdfOptions = CreateDirectoryFilesOptions.builder()
+                .project(options.project())
+                .dir(options.dir())
+                .selectedDir(options.selectedDir())
+                .useSeparateFolders(options.useSeparateFolders())
+                .build();
 
         for (InitialDirectories directory : InitialDirectories.values()) {
-            if (directory.getDirectoryName().equals(dir.getName())) {
-                directory.createFiles(project, dir, selectedDir);
+            if (directory.getDirectoryName().equals(options.dir().getName())) {
+                directory.createFiles(cdfOptions);
                 return;
             }
         }
 
-        throw new Exception("Unknown directory: " + dir.getName());
+        throw new Exception("Unknown directory: " + options.dir().getName());
     }
 
     /**
