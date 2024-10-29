@@ -1,0 +1,43 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.back-to-the-feature</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Back-to-the-Feature</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">LudaNjubara</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+        <p>Back-to-the-feature is a plugin that allows you to generate a folder/file structure for a specific feature.</p>
+        <p>It is useful when you want to create a new feature in your project, and you don't feel like writing boilerplate code.</p>
+    ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="settings.PluginSettingsState"/>
+        <projectConfigurable instance="settings.PluginSettingsConfigurable" displayName="Back to the Feature"/>
+    </extensions>
+    <actions>
+        <group id="group.MainGroup" text="Back to the Feature"
+               description="All available actions regarding feature generation."
+                popup="true">
+
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+
+            <action class="action.GenerateFeatureAction" id="action.GenerateFeatureAction" text="Generate From Existing"
+                    description="Generate a folder structure within the currently selected folder."/>
+
+        </group>
+    </actions>
+</idea-plugin>

@@ -1,0 +1,24 @@
+package com.example.demo.mapper;
+
+import com.example.demo.model.$PREFIX_CAPITALIZED$;
+import com.example.demo.dto.$PREFIX_CAPITALIZED$DTO;
+import com.example.demo.request.$PREFIX_CAPITALIZED$Request;
+
+public class $PREFIX_CAPITALIZED$Mapper {
+
+    public $PREFIX_CAPITALIZED$DTO toDTO($PREFIX_CAPITALIZED$ entity) {
+        $PREFIX_CAPITALIZED$DTO dto = new $PREFIX_CAPITALIZED$DTO();
+
+        // TODO: Map fields from entity to dto
+
+        return dto;
+    }
+
+    public $PREFIX_CAPITALIZED$ toEntity($PREFIX_CAPITALIZED$Request request) {
+        $PREFIX_CAPITALIZED$ entity = new $PREFIX_CAPITALIZED$();
+
+        // TODO: Map fields from request to entity
+
+        return entity;
+    }
+}

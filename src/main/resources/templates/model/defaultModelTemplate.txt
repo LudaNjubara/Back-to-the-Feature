@@ -1,0 +1,18 @@
+package com.example.demo.model;
+
+import lombok.Data;
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Data
+@Entity
+@Table(name = "$PREFIX_LOWERCASE$")
+public class $PREFIX_CAPITALIZED$ implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+
+
+}

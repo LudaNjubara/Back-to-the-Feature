@@ -1,0 +1,10 @@
+package com.example.demo.response;
+
+import lombok.Getter;
+
+@Getter
+public class $PREFIX_CAPITALIZED$Response {
+
+
+
+}

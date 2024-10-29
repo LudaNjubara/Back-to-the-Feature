@@ -1,0 +1,42 @@
+package com.example.demo.service;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.example.demo.model.$PREFIX_CAPITALIZED$;
+import com.example.demo.repository.$PREFIX_CAPITALIZED$Repository;
+import com.example.demo.dto.$PREFIX_CAPITALIZED$DTO;
+import com.example.demo.mapper.$PREFIX_CAPITALIZED$Mapper;
+
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
+@Transactional
+@Service
+public class $PREFIX_CAPITALIZED$Service {
+
+    private final $PREFIX_CAPITALIZED$Repository $PREFIX_LOWERCASE$Repository;
+    private final $PREFIX_CAPITALIZED$Mapper $PREFIX_LOWERCASE$Mapper;
+
+    public List<$PREFIX_CAPITALIZED$DTO> findAll() {
+        return $PREFIX_LOWERCASE$Repository.findAll().stream()
+                .map($PREFIX_LOWERCASE$Mapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<$PREFIX_CAPITALIZED$DTO> findById(Long id) {
+        return $PREFIX_LOWERCASE$Repository.findById(id)
+                .map($PREFIX_LOWERCASE$Mapper::toDTO);
+    }
+
+    public $PREFIX_CAPITALIZED$DTO save($PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$) {
+        return $PREFIX_LOWERCASE$Mapper.toDTO($PREFIX_LOWERCASE$Repository.save($PREFIX_LOWERCASE$));
+    }
+
+    public void deleteById(Long id) {
+        $PREFIX_LOWERCASE$Repository.deleteById(id);
+    }
+}

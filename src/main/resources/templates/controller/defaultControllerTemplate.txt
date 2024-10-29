@@ -1,0 +1,46 @@
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.*;
+import com.example.demo.service.$PREFIX_CAPITALIZED$Service;
+import com.example.demo.dto.$PREFIX_CAPITALIZED$DTO;
+import com.example.demo.request.$PREFIX_CAPITALIZED$Request;
+
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/$PREFIX_LOWERCASE$")
+public class $PREFIX_CAPITALIZED$Controller {
+
+    private final $PREFIX_CAPITALIZED$Service $PREFIX_LOWERCASE$Service;
+
+    @GetMapping
+    public List<$PREFIX_CAPITALIZED$DTO> getAll() {
+        return $PREFIX_LOWERCASE$Service.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public $PREFIX_CAPITALIZED$DTO get$PREFIX_CAPITALIZED$ById(@PathVariable Long id) {
+        return $PREFIX_LOWERCASE$Service.findById(id).orElse(null);
+    }
+
+    @PostMapping
+    public $PREFIX_CAPITALIZED$DTO create$PREFIX_CAPITALIZED$(@Valid @RequestBody $PREFIX_CAPITALIZED$Request request) {
+        $PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$ = $PREFIX_LOWERCASE$Service.getMapper().toEntity(request);
+        return $PREFIX_LOWERCASE$Service.save($PREFIX_LOWERCASE$);
+    }
+
+    @PutMapping("/{id}")
+    public $PREFIX_CAPITALIZED$DTO update$PREFIX_CAPITALIZED$(@PathVariable Long id, @Valid @RequestBody $PREFIX_CAPITALIZED$Request request) {
+        $PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$ = $PREFIX_LOWERCASE$Service.getMapper().toEntity(request);
+        $PREFIX_LOWERCASE$.setId(id);
+        return $PREFIX_LOWERCASE$Service.save($PREFIX_LOWERCASE$);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete$PREFIX_CAPITALIZED$(@PathVariable Long id) {
+        $PREFIX_LOWERCASE$Service.deleteById(id);
+    }
+}
