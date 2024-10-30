@@ -2,21 +2,18 @@ package $SELECTED_DIR_PACKAGE_PATH$;
 
 $IMPORTS$
 
-public class $PREFIX_CAPITALIZED$Mapper {
+import org.mapstruct.Mapper;
 
-    public $PREFIX_CAPITALIZED$DTO toDTO($PREFIX_CAPITALIZED$ entity) {
-        $PREFIX_CAPITALIZED$DTO dto = new $PREFIX_CAPITALIZED$DTO();
+import java.util.List;
 
-        // TODO: Map fields from entity to dto
+@Mapper(componentModel = "spring")
+public interface $PREFIX_CAPITALIZED$Mapper {
 
-        return dto;
-    }
+    List<$PREFIX_CAPITALIZED$Response> mapTo$PREFIX_CAPITALIZED$ResponseList(List<$PREFIX_CAPITALIZED$> $PREFIX_LOWERCASE$List);
 
-    public $PREFIX_CAPITALIZED$ toEntity($PREFIX_CAPITALIZED$Request request) {
-        $PREFIX_CAPITALIZED$ entity = new $PREFIX_CAPITALIZED$();
+    $PREFIX_CAPITALIZED$ mapToEntity($PREFIX_CAPITALIZED$Request $PREFIX_LOWERCASE$Request);
 
-        // TODO: Map fields from request to entity
+    $PREFIX_CAPITALIZED$Response mapToResponse($PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$);
 
-        return entity;
-    }
+    void updateEntityFromRequest($PREFIX_CAPITALIZED$Request $PREFIX_LOWERCASE$Request, $PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$);
 }

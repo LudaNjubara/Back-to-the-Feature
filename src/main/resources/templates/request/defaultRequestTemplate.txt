@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,5 +15,7 @@ import lombok.Builder;
 @Builder
 public class $PREFIX_CAPITALIZED$Request {
 
+    @NotNull(message = "id is required")
+    private Long id;
 
 }

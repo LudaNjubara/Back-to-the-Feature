@@ -36,7 +36,7 @@ public enum InitialDirectories {
             FilesUtils.createResponseDirectoryFiles(options);
         }
     },
-    REQUEST("request", false) {
+    REQUEST("request", true) {
         @Override
         public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
             FilesUtils.createRequestDirectoryFiles(options);
@@ -48,7 +48,7 @@ public enum InitialDirectories {
             FilesUtils.createDtoDirectoryFiles(options);
         }
     },
-    MAPPER("mapper", false) {
+    MAPPER("mapper", true) {
         @Override
         public void createFiles(CreateDirectoryFilesOptions options) throws Exception {
             FilesUtils.createMapperDirectoryFiles(options);

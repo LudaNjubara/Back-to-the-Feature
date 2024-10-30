@@ -25,9 +25,7 @@ public class FilesUtils {
         createModelDirectoryFiles(cdfOptions);
         createServiceDirectoryFiles(cdfOptions);
         createRepositoryDirectoryFiles(cdfOptions);
-        createRequestDirectoryFiles(cdfOptions);
         createDtoDirectoryFiles(cdfOptions);
-        createMapperDirectoryFiles(cdfOptions);
     }
 
     /**
@@ -55,14 +53,16 @@ public class FilesUtils {
                     .replace(
                             "$IMPORTS$",
                             "import " + packagePathWoCurrDir + "service." + prefix + "Service;\n"
-                                    + "import " + packagePathWoCurrDir + "dto." + prefix + "DTO;\n"
                                     + "import " + packagePathWoCurrDir + "request." + prefix + "Request;\n"
-                                    + "import " + packagePathWoCurrDir + "response." + prefix + "Response;\n");
+                                    + "import " + packagePathWoCurrDir + "response." + prefix + "Response;\n"
+                                    + "import " + packagePathWoCurrDir + "mapper." + prefix + "Mapper;\n");
         } else {
             controllerContent = controllerContent
                     .replace(
                             "$IMPORTS$",
-                            "import " + packagePath + ".response." + prefix + "Response;\n");
+                            "import " + packagePath + ".response." + prefix + "Response;\n"
+                                    + "import " + packagePath + ".mapper." + prefix + "Mapper;\n"
+                                    + "import " + packagePath + ".request." + prefix + "Request;\n");
         }
 
         String finalControllerContent = controllerContent;
@@ -93,7 +93,6 @@ public class FilesUtils {
         String responseContent = new String(responseTemplate);
         responseContent = responseContent
                 .replace("$PREFIX_CAPITALIZED$", prefix)
-                .replace("$PREFIX_LOWERCASE$", prefix.toLowerCase())
                 .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath);
 
         if(options.useSeparateFolders()) {
@@ -106,8 +105,7 @@ public class FilesUtils {
         } else {
             responseContent = responseContent
                     .replace(
-                            "$IMPORTS$",
-                            "import " + packagePath.replace(options.dir().getName(), "") + prefix + "DTO;\n");
+                            "$IMPORTS$", "");
         }
 
         String finalResponseContent = responseContent;
@@ -192,8 +190,11 @@ public class FilesUtils {
     public static void createServiceDirectoryFiles(CreateDirectoryFilesOptions options) {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
+        final String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
         final byte[] serviceTemplate = CommonUtils.loadFile("/templates/service/defaultServiceTemplate.txt");
+
+        System.out.println(CommonUtils.getJavaVersion(options.project()));
 
         // Replace the template placeholders
         String serviceContent = new String(serviceTemplate);
@@ -203,19 +204,21 @@ public class FilesUtils {
                 .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath);
 
         if(options.useSeparateFolders()) {
-            String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
-
             serviceContent = serviceContent
                     .replace(
                             "$IMPORTS$",
                             "import " + packagePathWoCurrDir + "model." + prefix + ";\n"
                                     + "import " + packagePathWoCurrDir + "repository." + prefix + "Repository;\n"
                                     + "import " + packagePathWoCurrDir + "mapper." + prefix + "Mapper;\n"
-                                    + "import " + packagePathWoCurrDir + "dto." + prefix + "DTO;\n");
+                                    + "import " + packagePathWoCurrDir + "response." + prefix + "Response;\n"
+                                    + "import " + packagePathWoCurrDir + "request." + prefix + "Request;\n");
         } else {
             serviceContent = serviceContent
                     .replace(
-                            "$IMPORTS$", "");
+                            "$IMPORTS$",
+                            "import " + packagePath + ".mapper." + prefix + "Mapper;\n"
+                                    + "import " + packagePath + ".response." + prefix + "Response;\n"
+                                    + "import " + packagePath + ".request." + prefix + "Request;\n");
         }
 
         String finalServiceContent = serviceContent;
@@ -314,17 +317,19 @@ public class FilesUtils {
     public static void createMapperDirectoryFiles(CreateDirectoryFilesOptions options) {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
+        final String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
         final byte[] mapperTemplate = CommonUtils.loadFile("/templates/mapper/defaultMapperTemplate.txt");
 
         // Replace the template placeholders
         String mapperContent = new String(mapperTemplate);
-        mapperContent = mapperContent.replace("$PREFIX_CAPITALIZED$", prefix)
+        mapperContent = mapperContent
+                .replace("$PREFIX_CAPITALIZED$", prefix)
                 .replace("$PREFIX_LOWERCASE$", prefix.toLowerCase())
                 .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath);
 
+
         if (options.useSeparateFolders()) {
-            String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
             mapperContent = mapperContent
                     .replace(
@@ -335,7 +340,9 @@ public class FilesUtils {
         } else {
             mapperContent = mapperContent
                     .replace(
-                            "$IMPORTS$", "");
+                            "$IMPORTS$", "import " + packagePathWoCurrDir + prefix + ";\n"
+                                    + "import " + packagePathWoCurrDir + "response." + prefix + "Response;\n"
+                                    + "import " + packagePathWoCurrDir + "request." + prefix + "Request;\n");
         }
 
         String finalMapperContent = mapperContent;

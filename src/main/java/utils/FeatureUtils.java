@@ -16,9 +16,7 @@ public class FeatureUtils {
      * @throws Exception if an error occurs
      */
     public static void generateFeature(Project project, PsiDirectory selectedDir) throws Exception {
-        if (!DirectoryUtils.isDirectoryEmpty(selectedDir)) {
-            throw new Exception("Directory must be empty!");
-        }
+        ValidationUtils.preliminaryValidation(project, selectedDir);
 
         PluginSettingsState settings = PluginSettingsState.getInstance();
 

@@ -10,11 +10,11 @@ import lombok.Builder;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class $PREFIX_CAPITALIZED$Response {
 
-    $PREFIX_CAPITALIZED$DTO $PREFIX_LOWERCASE$;
+    private Long id;
 
 }

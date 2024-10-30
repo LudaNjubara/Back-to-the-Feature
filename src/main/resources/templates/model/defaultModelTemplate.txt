@@ -11,7 +11,7 @@ public class $PREFIX_CAPITALIZED$ implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
 
 

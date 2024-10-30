@@ -2,14 +2,12 @@ package utils;
 
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.ProjectScope;
-import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.util.IncorrectOperationException;
 
 import java.io.ByteArrayOutputStream;
@@ -33,6 +31,15 @@ public class CommonUtils {
                 throw new RuntimeException("Error reverting changes: " + e.getMessage());
             }
         });
+    }
+
+    public static String getJavaVersion(Project project) {
+        Sdk projectSdk = ProjectRootManager.getInstance(project).getProjectSdk();
+        if (projectSdk != null) {
+            return projectSdk.getVersionString();
+        } else {
+            return "No SDK configured";
+        }
     }
 
     /**

@@ -15,32 +15,31 @@ import java.util.List;
 public class $PREFIX_CAPITALIZED$Controller {
 
     private final $PREFIX_CAPITALIZED$Service $PREFIX_LOWERCASE$Service;
+    private final $PREFIX_CAPITALIZED$Mapper $PREFIX_LOWERCASE$Mapper;
 
     @GetMapping
     public List<$PREFIX_CAPITALIZED$Response> getAll() {
-        return $PREFIX_LOWERCASE$Service.findAll();
+        return $PREFIX_LOWERCASE$Service.getAll();
     }
 
     @GetMapping("/{id}")
     public $PREFIX_CAPITALIZED$Response get$PREFIX_CAPITALIZED$ById(@PathVariable Long id) {
-        return $PREFIX_LOWERCASE$Service.findById(id).orElse(null);
+        return $PREFIX_LOWERCASE$Service.getById(id);
     }
 
     @PostMapping
     public $PREFIX_CAPITALIZED$Response create$PREFIX_CAPITALIZED$(@Valid @RequestBody $PREFIX_CAPITALIZED$Request request) {
-        $PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$ = $PREFIX_LOWERCASE$Service.getMapper().toEntity(request);
-        return $PREFIX_LOWERCASE$Service.save($PREFIX_LOWERCASE$);
+
+        return $PREFIX_LOWERCASE$Mapper.mapToResponse($PREFIX_LOWERCASE$Service.create(request));
     }
 
     @PutMapping("/{id}")
     public $PREFIX_CAPITALIZED$Response update$PREFIX_CAPITALIZED$(@PathVariable Long id, @Valid @RequestBody $PREFIX_CAPITALIZED$Request request) {
-        $PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$ = $PREFIX_LOWERCASE$Service.getMapper().toEntity(request);
-        $PREFIX_LOWERCASE$.setId(id);
-        return $PREFIX_LOWERCASE$Service.save($PREFIX_LOWERCASE$);
+        return $PREFIX_LOWERCASE$Service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     public void delete$PREFIX_CAPITALIZED$(@PathVariable Long id) {
-        $PREFIX_LOWERCASE$Service.deleteById(id);
+        $PREFIX_LOWERCASE$Service.delete(id);
     }
 }

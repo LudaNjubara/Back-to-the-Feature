@@ -48,7 +48,8 @@ public class GenerateFeatureAction extends AnAction {
             } catch (Exception e1) {
                 Messages.showMessageDialog(project, "Error: " + e1.getMessage(), "Error", Messages.getErrorIcon());
             }
-            Messages.showMessageDialog(project, "Error: " + ex.getMessage(), "Error", Messages.getErrorIcon());
+
+            Messages.showMessageDialog(project, ex.getMessage(), "Error", Messages.getErrorIcon());
         }
     }
 }

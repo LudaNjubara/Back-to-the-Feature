@@ -2,13 +2,14 @@ package $SELECTED_DIR_PACKAGE_PATH$;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 $IMPORTS$
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -19,22 +20,31 @@ public class $PREFIX_CAPITALIZED$Service {
     private final $PREFIX_CAPITALIZED$Repository $PREFIX_LOWERCASE$Repository;
     private final $PREFIX_CAPITALIZED$Mapper $PREFIX_LOWERCASE$Mapper;
 
-    public List<$PREFIX_CAPITALIZED$DTO> findAll() {
+    public List<$PREFIX_CAPITALIZED$Response> getAll() {
         return $PREFIX_LOWERCASE$Repository.findAll().stream()
-                .map($PREFIX_LOWERCASE$Mapper::toDTO)
+                .map($PREFIX_LOWERCASE$Mapper::mapToResponse)
                 .collect(Collectors.toList());
     }
 
-    public Optional<$PREFIX_CAPITALIZED$DTO> findById(Long id) {
-        return $PREFIX_LOWERCASE$Repository.findById(id)
-                .map($PREFIX_LOWERCASE$Mapper::toDTO);
+    public $PREFIX_CAPITALIZED$Response getById(Long id) {
+        return $PREFIX_LOWERCASE$Mapper.mapToResponse($PREFIX_LOWERCASE$Repository.findById(id).orElse(null));
     }
 
-    public $PREFIX_CAPITALIZED$DTO save($PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$) {
-        return $PREFIX_LOWERCASE$Mapper.toDTO($PREFIX_LOWERCASE$Repository.save($PREFIX_LOWERCASE$));
+    public $PREFIX_CAPITALIZED$ create($PREFIX_CAPITALIZED$Request request) {
+        return $PREFIX_LOWERCASE$Repository.save($PREFIX_LOWERCASE$Mapper.mapToEntity(request));
     }
 
-    public void deleteById(Long id) {
+    public $PREFIX_CAPITALIZED$Response update(Long id, $PREFIX_CAPITALIZED$Request request) {
+        $PREFIX_CAPITALIZED$ $PREFIX_LOWERCASE$ = $PREFIX_LOWERCASE$Repository
+            .findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "$PREFIX_CAPITALIZED$ not found with id: " + id));
+
+        $PREFIX_LOWERCASE$Mapper.updateEntityFromRequest(request, $PREFIX_LOWERCASE$);
+
+        return $PREFIX_LOWERCASE$Mapper.mapToResponse($PREFIX_LOWERCASE$Repository.save($PREFIX_LOWERCASE$));
+    }
+
+    public void delete(Long id) {
         $PREFIX_LOWERCASE$Repository.deleteById(id);
     }
 }
