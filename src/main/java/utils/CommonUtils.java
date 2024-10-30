@@ -42,6 +42,10 @@ public class CommonUtils {
         }
     }
 
+    public static Integer convertJavaVersionToInteger(String javaVersion) {
+        return Integer.parseInt(javaVersion.split("\"")[1].split("\\.")[0]);
+    }
+
     /**
      * Calculate the package path from the selected directory.
      *

@@ -2,6 +2,7 @@ package utils;
 
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiFile;
+import constants.Constants;
 import model.CreateDirectoryFilesOptions;
 import model.CreateInitialFilesOptions;
 
@@ -36,6 +37,7 @@ public class FilesUtils {
     public static void createControllerDirectoryFiles(CreateDirectoryFilesOptions options) {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
+        final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
         final byte[] controllerTemplate = CommonUtils.loadFile("/templates/controller/defaultControllerTemplate.txt");
 
@@ -44,7 +46,8 @@ public class FilesUtils {
         controllerContent = controllerContent
                 .replace("$PREFIX_CAPITALIZED$", prefix)
                 .replace("$PREFIX_LOWERCASE$", prefix.toLowerCase())
-                .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath);
+                .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath)
+                .replace("$JAVAX_OR_JAKARTA$", javaVersion >= Constants.MIN_JAVA_VERSION_FOR_JAKARTA ? "jakarta" : "javax");
 
         if (options.useSeparateFolders()) {
             String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
@@ -129,6 +132,7 @@ public class FilesUtils {
     public static void createRequestDirectoryFiles(CreateDirectoryFilesOptions options) {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
+        final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
         final byte[] requestTemplate = CommonUtils.loadFile("/templates/request/defaultRequestTemplate.txt");
 
@@ -136,7 +140,8 @@ public class FilesUtils {
         String requestContent = new String(requestTemplate);
         requestContent = requestContent
                 .replace("$PREFIX_CAPITALIZED$", prefix)
-                .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath);
+                .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath)
+                .replace("$JAVAX_OR_JAKARTA$", javaVersion >= Constants.MIN_JAVA_VERSION_FOR_JAKARTA ? "jakarta" : "javax");
 
         String finalRequestContent = requestContent;
 
@@ -159,6 +164,7 @@ public class FilesUtils {
     public static void createModelDirectoryFiles(CreateDirectoryFilesOptions options) {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
+        final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
         final byte[] modelTemplate = CommonUtils.loadFile("/templates/model/defaultModelTemplate.txt");
 
@@ -167,7 +173,8 @@ public class FilesUtils {
         modelContent = modelContent
                 .replace("$PREFIX_CAPITALIZED$", prefix)
                 .replace("$PREFIX_LOWERCASE$", prefix.toLowerCase())
-                .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath);
+                .replace("$SELECTED_DIR_PACKAGE_PATH$", packagePath)
+                .replace("$JAVAX_OR_JAKARTA$", javaVersion >= Constants.MIN_JAVA_VERSION_FOR_JAKARTA ? "jakarta" : "javax");
 
         String finalModelContent = modelContent;
 
@@ -193,8 +200,6 @@ public class FilesUtils {
         final String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
         final byte[] serviceTemplate = CommonUtils.loadFile("/templates/service/defaultServiceTemplate.txt");
-
-        System.out.println(CommonUtils.getJavaVersion(options.project()));
 
         // Replace the template placeholders
         String serviceContent = new String(serviceTemplate);
