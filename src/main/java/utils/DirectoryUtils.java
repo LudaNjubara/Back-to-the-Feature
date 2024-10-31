@@ -23,7 +23,12 @@ public class DirectoryUtils {
         if (options.useSeparateFolders()) {
             directoryNames = new ArrayList<>(Arrays.stream(InitialDirectories.values()).map(InitialDirectories::getDirectoryName).toList());
         } else {
-            directoryNames = new ArrayList<>(Arrays.stream(InitialDirectories.values()).filter(InitialDirectories::isUsedInCombinedFolder).map(InitialDirectories::getDirectoryName).toList());
+            directoryNames = new ArrayList<>(
+                    Arrays.stream(
+                                    InitialDirectories.values())
+                            .filter(InitialDirectories::isUsedInCombinedFolder)
+                            .map(InitialDirectories::getDirectoryName)
+                            .toList());
         }
 
         try {

@@ -29,7 +29,6 @@ public class $PREFIX_CAPITALIZED$Controller {
 
     @PostMapping
     public $PREFIX_CAPITALIZED$Response create$PREFIX_CAPITALIZED$(@Valid @RequestBody $PREFIX_CAPITALIZED$Request request) {
-
         return $PREFIX_LOWERCASE$Mapper.mapToResponse($PREFIX_LOWERCASE$Service.create(request));
     }
 

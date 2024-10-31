@@ -20,42 +20,16 @@ public class FeatureUtils {
 
         PluginSettingsState settings = PluginSettingsState.getInstance();
 
-        if (settings.useSeparateFolders) {
-            generateFeatureSeparate(project, selectedDir);
-        } else {
-            generateFeatureCombined(project, selectedDir);
-        }
-
-    }
-
-    private static void generateFeatureSeparate(Project project, PsiDirectory selectedDir) throws Exception {
         InitialDirectoriesOptions idOptions = InitialDirectoriesOptions.builder()
                 .project(project)
                 .selectedDir(selectedDir)
-                .useSeparateFolders(true)
+                .useSeparateFolders(settings.useSeparateFolders)
                 .build();
 
         PopulateDirectoriesOptions pdOptions = PopulateDirectoriesOptions.builder()
                 .project(project)
                 .selectedDir(selectedDir)
-                .useSeparateFolders(true)
-                .build();
-
-        DirectoryUtils.createInitialDirectories(idOptions);
-        DirectoryUtils.populateDirectories(pdOptions);
-    }
-
-    private static void generateFeatureCombined(Project project, PsiDirectory selectedDir) throws Exception {
-        InitialDirectoriesOptions idOptions = InitialDirectoriesOptions.builder()
-                .project(project)
-                .selectedDir(selectedDir)
-                .useSeparateFolders(false)
-                .build();
-
-        PopulateDirectoriesOptions pdOptions = PopulateDirectoriesOptions.builder()
-                .project(project)
-                .selectedDir(selectedDir)
-                .useSeparateFolders(false)
+                .useSeparateFolders(settings.useSeparateFolders)
                 .build();
 
         DirectoryUtils.createInitialDirectories(idOptions);

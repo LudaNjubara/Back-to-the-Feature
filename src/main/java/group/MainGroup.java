@@ -1,5 +1,6 @@
 package group;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -28,9 +29,7 @@ public class MainGroup extends DefaultActionGroup {
         boolean isDirectory = selectedEl instanceof PsiDirectory;
         e.getPresentation().setEnabled(isDirectory);
 
-        // Take this opportunity to set an icon for the group.
-        //event.getPresentation().setIcon(SdkIcons.Sdk_default_icon); TODO: Add icon
-
-
+        // icon
+        e.getPresentation().setIcon(AllIcons.Actions.GroupByModule);
     }
 }

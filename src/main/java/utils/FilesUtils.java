@@ -3,6 +3,8 @@ package utils;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.psi.PsiFile;
 import constants.Constants;
+import constants.FileType;
+import constants.InitialDirectories;
 import model.CreateDirectoryFilesOptions;
 import model.CreateInitialFilesOptions;
 
@@ -14,7 +16,7 @@ public class FilesUtils {
      *
      * @param options the initial files options
      */
-    public static void createInitialFiles(CreateInitialFilesOptions options) {
+    public static void createInitialFiles(CreateInitialFilesOptions options) throws Exception {
         CreateDirectoryFilesOptions cdfOptions = CreateDirectoryFilesOptions.builder()
                 .project(options.project())
                 .dir(options.selectedDir())
@@ -22,11 +24,10 @@ public class FilesUtils {
                 .useSeparateFolders(options.useSeparateFolders())
                 .build();
 
-        createControllerDirectoryFiles(cdfOptions);
-        createModelDirectoryFiles(cdfOptions);
-        createServiceDirectoryFiles(cdfOptions);
-        createRepositoryDirectoryFiles(cdfOptions);
-        createDtoDirectoryFiles(cdfOptions);
+        for(InitialDirectories entry : InitialDirectories.values()) {
+            if(entry.isUsedInCombinedFolder()) continue;
+            entry.createFiles(cdfOptions);
+        }
     }
 
     /**
@@ -39,7 +40,7 @@ public class FilesUtils {
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
-        final byte[] controllerTemplate = CommonUtils.loadFile("/templates/controller/defaultControllerTemplate.txt");
+        final byte[] controllerTemplate = CommonUtils.loadFile(FileType.CONTROLLER.getTemplatePath());
 
         // Replace the template placeholders
         String controllerContent = new String(controllerTemplate);
@@ -71,7 +72,7 @@ public class FilesUtils {
         String finalControllerContent = controllerContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile controllerFile = options.dir().createFile(prefix + "Controller.java");
+            PsiFile controllerFile = options.dir().createFile(prefix + FileType.CONTROLLER.getDefaultFileName());
 
             try {
                 controllerFile.getVirtualFile().setBinaryContent(finalControllerContent.getBytes());
@@ -90,7 +91,7 @@ public class FilesUtils {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
 
-        final byte[] responseTemplate = CommonUtils.loadFile("/templates/response/defaultResponseTemplate.txt");
+        final byte[] responseTemplate = CommonUtils.loadFile(FileType.RESPONSE.getTemplatePath());
 
         // Replace the template placeholders
         String responseContent = new String(responseTemplate);
@@ -114,7 +115,7 @@ public class FilesUtils {
         String finalResponseContent = responseContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile responseFile = options.dir().createFile(prefix + "Response.java");
+            PsiFile responseFile = options.dir().createFile(prefix + FileType.RESPONSE.getDefaultFileName());
 
             try {
                 responseFile.getVirtualFile().setBinaryContent(finalResponseContent.getBytes());
@@ -134,7 +135,7 @@ public class FilesUtils {
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
-        final byte[] requestTemplate = CommonUtils.loadFile("/templates/request/defaultRequestTemplate.txt");
+        final byte[] requestTemplate = CommonUtils.loadFile(FileType.REQUEST.getTemplatePath());
 
         // Replace the template placeholders
         String requestContent = new String(requestTemplate);
@@ -146,7 +147,7 @@ public class FilesUtils {
         String finalRequestContent = requestContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile requestFile = options.dir().createFile(prefix + "Request.java");
+            PsiFile requestFile = options.dir().createFile(prefix + FileType.REQUEST.getDefaultFileName());
 
             try {
                 requestFile.getVirtualFile().setBinaryContent(finalRequestContent.getBytes());
@@ -166,7 +167,7 @@ public class FilesUtils {
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
-        final byte[] modelTemplate = CommonUtils.loadFile("/templates/model/defaultModelTemplate.txt");
+        final byte[] modelTemplate = CommonUtils.loadFile(FileType.MODEL.getTemplatePath());
 
         // Replace the template placeholders
         String modelContent = new String(modelTemplate);
@@ -179,7 +180,7 @@ public class FilesUtils {
         String finalModelContent = modelContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile modelFile = options.dir().createFile(prefix + ".java");
+            PsiFile modelFile = options.dir().createFile(prefix + FileType.MODEL.getDefaultFileName());
 
             try {
                 modelFile.getVirtualFile().setBinaryContent(finalModelContent.getBytes());
@@ -199,7 +200,7 @@ public class FilesUtils {
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
-        final byte[] serviceTemplate = CommonUtils.loadFile("/templates/service/defaultServiceTemplate.txt");
+        final byte[] serviceTemplate = CommonUtils.loadFile(FileType.SERVICE.getTemplatePath());
 
         // Replace the template placeholders
         String serviceContent = new String(serviceTemplate);
@@ -229,7 +230,7 @@ public class FilesUtils {
         String finalServiceContent = serviceContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile serviceFile = options.dir().createFile(prefix + "Service.java");
+            PsiFile serviceFile = options.dir().createFile(prefix + FileType.SERVICE.getDefaultFileName());
 
             try {
                 serviceFile.getVirtualFile().setBinaryContent(finalServiceContent.getBytes());
@@ -248,7 +249,7 @@ public class FilesUtils {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
 
-        final byte[] repositoryTemplate = CommonUtils.loadFile("/templates/repository/defaultRepositoryTemplate.txt");
+        final byte[] repositoryTemplate = CommonUtils.loadFile(FileType.REPOSITORY.getTemplatePath());
 
         // Replace the template placeholders
         String repositoryContent = new String(repositoryTemplate);
@@ -273,7 +274,7 @@ public class FilesUtils {
         String finalRepositoryContent = repositoryContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile repositoryFile = options.dir().createFile(prefix + "Repository.java");
+            PsiFile repositoryFile = options.dir().createFile(prefix + FileType.REPOSITORY.getDefaultFileName());
 
             try {
                 repositoryFile.getVirtualFile().setBinaryContent(finalRepositoryContent.getBytes());
@@ -292,7 +293,7 @@ public class FilesUtils {
         final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
 
-        final byte[] dtoTemplate = CommonUtils.loadFile("/templates/dto/defaultDTOTemplate.txt");
+        final byte[] dtoTemplate = CommonUtils.loadFile(FileType.DTO.getTemplatePath());
 
         // Replace the template placeholders
         String dtoContent = new String(dtoTemplate);
@@ -304,7 +305,7 @@ public class FilesUtils {
         String finalDtoContent = dtoContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile dtoFile = options.dir().createFile(prefix + "DTO.java");
+            PsiFile dtoFile = options.dir().createFile(prefix + FileType.DTO.getDefaultFileName());
 
             try {
                 dtoFile.getVirtualFile().setBinaryContent(finalDtoContent.getBytes());
@@ -324,7 +325,7 @@ public class FilesUtils {
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
-        final byte[] mapperTemplate = CommonUtils.loadFile("/templates/mapper/defaultMapperTemplate.txt");
+        final byte[] mapperTemplate = CommonUtils.loadFile(FileType.MAPPER.getTemplatePath());
 
         // Replace the template placeholders
         String mapperContent = new String(mapperTemplate);
@@ -353,7 +354,7 @@ public class FilesUtils {
         String finalMapperContent = mapperContent;
 
         WriteCommandAction.runWriteCommandAction(options.project(), () -> {
-            PsiFile mapperFile = options.dir().createFile(prefix + "Mapper.java");
+            PsiFile mapperFile = options.dir().createFile(prefix + FileType.MAPPER.getDefaultFileName());
 
             try {
                 mapperFile.getVirtualFile().setBinaryContent(finalMapperContent.getBytes());

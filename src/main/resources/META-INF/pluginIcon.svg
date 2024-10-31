@@ -1,12 +1,25 @@
-<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M32.0845 7.94025V4H24.0203V7.9896H16.029V4H7.91553V7.94025H4V36H16.0044V32.0045C16.0058 30.9457 16.4274 29.9308 17.1766 29.1826C17.9258 28.4345 18.9412 28.0143 20 28.0143C21.0588 28.0143 22.0743 28.4345 22.8234 29.1826C23.5726 29.9308 23.9942 30.9457 23.9956 32.0045V36H36V7.94025H32.0845Z"
-          fill="url(#paint0_linear)"/>
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="300" height="300"
+     version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs">
+    <g width="100%" height="100%" transform="matrix(1,0,0,1,0,0)">
+        <path d="M6.517,17.569c-1.157-1.145-3.364-.909-4.379,.121-1.132,1.149-1.008,3.87-.959,4.381,.046,.483,.432,.863,.916,.902,.13,.01,3.028,.294,4.356-1.019,.97-1.049,1.218-3.185,.066-4.386Z"
+              fill="url(#SvgjsLinearGradient1129)" fill-opacity="1" data-original-color="#000000ff" stroke="none"
+              stroke-opacity="1"/>
+        <g>
+            <path d="M18.196,15.759c6.363-6.464,4.385-13.443,4.298-13.737-.097-.323-.348-.576-.67-.672-.291-.088-7.207-2.073-13.552,4.372L3.631,10.436c-.63,.641-.9,1.553-.719,2.44,.175,.862,.755,1.576,1.557,1.908,1.154,.479,2.107,1.101,2.896,1.896,.768,.78,1.353,1.791,1.869,2.95,1.041,2.336,3.666,1.747,4.321,.844l4.641-4.715Zm-6.125-3.801l-.029-.029c-1.636-1.662-.703-3.106,0-3.82,.611-.62,2.095-1.71,3.805,0,1.649,1.649,.703,3.106,0,3.82-.61,.62-2.05,1.755-3.776,.029Z"
+                  fill="url(#SvgjsLinearGradient1129)" fill-opacity="1" data-original-color="#000000ff" stroke="none"
+                  stroke-opacity="1"/>
+            <path d="M2.206,9.034L6.847,4.32c.45-.457,.904-.877,1.359-1.262-1.382-.48-2.856-.22-3.73,.192-1.688,.795-2.935,2.844-3.072,3.075-.075,.127-.121,.268-.135,.415-.021,.215-.129,1.627,.358,3.012,.167-.255,.36-.495,.578-.717Z"
+                  fill="url(#SvgjsLinearGradient1129)" fill-opacity="1" data-original-color="#000000ff" stroke="none"
+                  stroke-opacity="1"/>
+            <path d="M20.638,19.608c.402-.881,.642-2.367,.172-3.762-.364,.44-.76,.88-1.189,1.316l-4.641,4.715c-.233,.237-.488,.445-.759,.624,1.365,.49,2.751,.386,2.964,.366,.151-.014,.298-.062,.428-.142,.227-.138,2.245-1.405,3.026-3.117Z"
+                  fill="url(#SvgjsLinearGradient1129)" fill-opacity="1" data-original-color="#000000ff" stroke="none"
+                  stroke-opacity="1"/>
+        </g>
+    </g>
     <defs>
-        <linearGradient id="paint0_linear" x1="2.94192" y1="4.89955" x2="37.7772" y2="39.7345"
-                        gradientUnits="userSpaceOnUse">
-            <stop offset="0.15937" stop-color="#3BEA62"/>
-            <stop offset="0.5404" stop-color="#3C99CC"/>
-            <stop offset="0.93739" stop-color="#6B57FF"/>
+        <linearGradient id="SvgjsLinearGradient1129">
+            <stop stop-opacity="1" stop-color="#48114e" offset="0"/>
+            <stop stop-opacity="1" stop-color="#9127a4" offset="1"/>
         </linearGradient>
     </defs>
 </svg>
