@@ -2,6 +2,7 @@ package utils;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
+import exception.ValidationException;
 
 public class ValidationUtils {
 
@@ -10,19 +11,19 @@ public class ValidationUtils {
         *
         * @param project     the project
         * @param selectedDir the selected directory
-        * @throws Exception if an error occurs
+        * @throws ValidationException if an error occurs
         */
-        public static void preliminaryValidation(Project project, PsiDirectory selectedDir) throws Exception {
+        public static void preliminaryValidation(Project project, PsiDirectory selectedDir) throws ValidationException {
             if (selectedDir == null) {
-                throw new Exception("No directory selected");
+                throw new ValidationException("No directory selected");
             }
 
             if (!DirectoryUtils.isDirectoryEmpty(selectedDir)) {
-                throw new Exception("Directory must be empty!");
+                throw new ValidationException("Directory must be empty!");
             }
 
             if(CommonUtils.getJavaVersion(project).equals("No SDK configured")) {
-                throw new Exception("No SDK configured. Please configure a Java SDK before using the plugin.");
+                throw new ValidationException("No SDK configured. Please configure a Java SDK before using the plugin.");
             }
         }
 }

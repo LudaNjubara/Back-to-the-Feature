@@ -25,6 +25,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="config.SentryInitializer"/>
         <applicationService serviceImplementation="settings.PluginSettingsState"/>
         <projectConfigurable instance="settings.PluginSettingsConfigurable" displayName="Back to the Feature"/>
     </extensions>

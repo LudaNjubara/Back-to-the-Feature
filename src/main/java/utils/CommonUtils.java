@@ -14,6 +14,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommonUtils {
     public static String capitalize(String str) {
@@ -43,7 +45,17 @@ public class CommonUtils {
     }
 
     public static Integer convertJavaVersionToInteger(String javaVersion) {
-        return Integer.parseInt(javaVersion.split("\"")[1].split("\\.")[0]);
+        // Regular expression to match version numbers
+        Pattern pattern = Pattern.compile("(\\d+)(\\.\\d+)?(\\.\\d+)?");
+        Matcher matcher = pattern.matcher(javaVersion);
+
+        if (matcher.find()) {
+            // Extract the major version number
+            String majorVersion = matcher.group(1);
+            return Integer.parseInt(majorVersion);
+        } else {
+            throw new IllegalArgumentException("Unsupported Java version: " + javaVersion);
+        }
     }
 
     /**

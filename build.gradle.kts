@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
     id("org.jetbrains.intellij") version "1.17.4"
+    id("io.sentry.jvm.gradle") version "4.13.0"
 }
 
 group = "com.back-to-the-feature"
@@ -26,6 +27,17 @@ dependencies {
 
     testCompileOnly("org.projectlombok:lombok:1.18.34")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
+}
+
+sentry {
+    // Generates a JVM (Java, Kotlin, etc.) source bundle and uploads your source code to Sentry.
+    // This enables source context, allowing you to see your source
+    // code as part of your stack traces in Sentry.
+    includeSourceContext = true
+
+    org = "mihael-sestak"
+    projectName = "java"
+    authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
 
 tasks {

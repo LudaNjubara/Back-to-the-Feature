@@ -8,6 +8,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
+import exception.ValidationException;
+import io.sentry.Sentry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import utils.CommonUtils;
@@ -42,13 +44,17 @@ public class GenerateFeatureAction extends AnAction {
 
         try {
             FeatureUtils.generateFeature(project, selectedDir);
+        } catch (ValidationException vEx) {
+            Messages.showMessageDialog(project, vEx.getMessage(), "Error", Messages.getErrorIcon());
         } catch (Exception ex) {
             try {
                 CommonUtils.revertChanges(project, selectedDir);
-            } catch (Exception e1) {
-                Messages.showMessageDialog(project, "Error: " + e1.getMessage(), "Error", Messages.getErrorIcon());
+            } catch (Exception ex1) {
+                Sentry.captureException(ex1);
+                Messages.showMessageDialog(project, "Error: " + ex1.getMessage(), "Error", Messages.getErrorIcon());
             }
 
+            Sentry.captureException(ex);
             Messages.showMessageDialog(project, ex.getMessage(), "Error", Messages.getErrorIcon());
         }
     }
