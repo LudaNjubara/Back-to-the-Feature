@@ -39,6 +39,9 @@
             <action class="action.GenerateFeatureFromExistingFolderAction" id="action.GenerateFeatureFromExistingFolderAction" text="Generate From Existing"
                     description="Generate a folder structure within the currently selected folder."/>
 
+            <action class="action.GenerateFeatureFromNewFolderAction" id="action.GenerateFeatureFromNewFolderAction" text="Generate From New"
+                    description="Generate a folder structure within a new folder."/>
+
         </group>
     </actions>
 </idea-plugin>

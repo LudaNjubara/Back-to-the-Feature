@@ -26,4 +26,25 @@ public class ValidationUtils {
                 throw new ValidationException("No SDK configured. Please configure a Java SDK before using the plugin.");
             }
         }
+
+        public static boolean validateNewFolderName(String newFolderName) throws ValidationException {
+            // only accept non-empty folder names that don't start with numbers, or special characters, or contain spaces
+            if (newFolderName == null || newFolderName.isEmpty()) {
+                throw new ValidationException("Folder name cannot be empty");
+            }
+
+            if (newFolderName.matches("^[0-9].*")) {
+                throw new ValidationException("Folder name cannot start with a number");
+            }
+
+            if (newFolderName.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+                throw new ValidationException("Folder name cannot contain special characters");
+            }
+
+            if (newFolderName.contains(" ")) {
+                throw new ValidationException("Folder name cannot contain spaces");
+            }
+
+            return true;
+        }
 }

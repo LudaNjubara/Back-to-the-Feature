@@ -1,6 +1,7 @@
 package utils;
 
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.util.IncorrectOperationException;
 import constants.InitialDirectories;
@@ -103,6 +104,18 @@ public class DirectoryUtils {
         }
 
         throw new Exception("Unknown directory: " + options.dir().getName());
+    }
+
+    /**
+     * Create a directory.
+     *
+     * @param dirName the directory name
+     * @param parentDir the parent directory
+     * @return the new directory
+     * @throws IncorrectOperationException if an error occurs
+     */
+    public static PsiDirectory createDirectory(String dirName, PsiDirectory parentDir) throws IncorrectOperationException {
+        return parentDir.createSubdirectory(dirName);
     }
 
     /**
