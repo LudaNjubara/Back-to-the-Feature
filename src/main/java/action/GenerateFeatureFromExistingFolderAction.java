@@ -17,13 +17,13 @@ import utils.FeatureUtils;
 
 import javax.swing.*;
 
-public class GenerateFeatureAction extends AnAction {
+public class GenerateFeatureFromExistingFolderAction extends AnAction {
 
-    public GenerateFeatureAction() {
+    public GenerateFeatureFromExistingFolderAction() {
         super();
     }
 
-    public GenerateFeatureAction(@Nullable String text, @Nullable String description, @Nullable Icon icon) {
+    public GenerateFeatureFromExistingFolderAction(@Nullable String text, @Nullable String description, @Nullable Icon icon) {
         super(text, description, icon);
     }
 

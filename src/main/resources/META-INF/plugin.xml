@@ -36,7 +36,7 @@
 
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
 
-            <action class="action.GenerateFeatureAction" id="action.GenerateFeatureAction" text="Generate From Existing"
+            <action class="action.GenerateFeatureFromExistingFolderAction" id="action.GenerateFeatureFromExistingFolderAction" text="Generate From Existing"
                     description="Generate a folder structure within the currently selected folder."/>
 
         </group>
