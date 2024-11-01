@@ -4,6 +4,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import exception.ValidationException;
 
+import java.util.List;
+
 public class ValidationUtils {
 
         /**
@@ -27,10 +29,14 @@ public class ValidationUtils {
             }
         }
 
-        public static boolean validateNewFolderName(String newFolderName) throws ValidationException {
+        public static void validateNewFolderName(String newFolderName, List<String> existingFolderNames) throws ValidationException {
             // only accept non-empty folder names that don't start with numbers, or special characters, or contain spaces
             if (newFolderName == null || newFolderName.isEmpty()) {
                 throw new ValidationException("Folder name cannot be empty");
+            }
+
+            if (existingFolderNames.contains(newFolderName.toLowerCase())) {
+                throw new ValidationException("Folder already exists");
             }
 
             if (newFolderName.matches("^[0-9].*")) {
@@ -44,7 +50,5 @@ public class ValidationUtils {
             if (newFolderName.contains(" ")) {
                 throw new ValidationException("Folder name cannot contain spaces");
             }
-
-            return true;
         }
 }

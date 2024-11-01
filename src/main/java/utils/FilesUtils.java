@@ -341,7 +341,7 @@ public class FilesUtils {
                     .replace(
                             "$IMPORTS$",
                             "import " + packagePathWoCurrDir + "model." + prefix + ";\n"
-                                    + "import " + packagePathWoCurrDir + "dto." + prefix + "DTO;\n"
+                                    + "import " + packagePathWoCurrDir + "response." + prefix + "Response;\n"
                                     + "import " + packagePathWoCurrDir + "request." + prefix + "Request;\n");
         } else {
             mapperContent = mapperContent

@@ -17,6 +17,9 @@ import utils.ValidationUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
@@ -28,9 +31,16 @@ public class NewFolderDialog extends JDialog implements Dialog {
     private PsiDirectory newDir;
     private JTextField folderNameField;
     private JLabel validationMessage;
+    private List<String> existingFolderNames;
 
     @Override
     public void initDialog() {
+
+        existingFolderNames = Arrays.stream(parentDir.getSubdirectories())
+                .map(PsiDirectory::getName)
+                .collect(Collectors.toList());
+
+
         setModalityType(ModalityType.APPLICATION_MODAL);
         setTitle("Generate Feature From a New Folder");
         setLayout(new BorderLayout());
@@ -111,7 +121,7 @@ public class NewFolderDialog extends JDialog implements Dialog {
     @Override
     public boolean validateDialog() {
         try {
-            ValidationUtils.validateNewFolderName(folderNameField.getText());
+            ValidationUtils.validateNewFolderName(folderNameField.getText(), existingFolderNames);
             validationMessage.setText("");
             return true;
         } catch (ValidationException ex) {
