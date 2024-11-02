@@ -36,7 +36,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createControllerDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
@@ -88,7 +88,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createResponseDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
 
         final byte[] responseTemplate = CommonUtils.loadFile(FileType.RESPONSE.getTemplatePath());
@@ -131,7 +131,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createRequestDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
@@ -163,7 +163,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createModelDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final Integer javaVersion = CommonUtils.convertJavaVersionToInteger(CommonUtils.getJavaVersion(options.project()));
 
@@ -196,7 +196,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createServiceDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
@@ -246,7 +246,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createRepositoryDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
 
         final byte[] repositoryTemplate = CommonUtils.loadFile(FileType.REPOSITORY.getTemplatePath());
@@ -290,7 +290,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createDtoDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
 
         final byte[] dtoTemplate = CommonUtils.loadFile(FileType.DTO.getTemplatePath());
@@ -321,7 +321,7 @@ public class FilesUtils {
      * @param options Options for creating the files
      */
     public static void createMapperDirectoryFiles(CreateDirectoryFilesOptions options) {
-        final String prefix = CommonUtils.capitalize(options.selectedDir().getName());
+        final String prefix = standardizeFileName(options.selectedDir().getName());
         final String packagePath = CommonUtils.calculatePackagePath(options.project(), options.dir(), options.selectedDir());
         final String packagePathWoCurrDir = packagePath.replace(options.dir().getName(), "");
 
@@ -362,5 +362,23 @@ public class FilesUtils {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    /**
+     * Transforms the prefix into a standardized file name. It removes any dashes or underscores and creates a pascal case name as a single word.
+     *
+     * @param prefix   the prefix
+     * @return the standardized file name
+     */
+    private static String standardizeFileName(String prefix) {
+        // strip away any dashes or underscores and crate a pascal case name as single word
+        String[] parts = prefix.split("[_-]");
+        StringBuilder sb = new StringBuilder();
+
+        for (String part : parts) {
+            sb.append(CommonUtils.capitalize(part));
+        }
+
+        return sb.toString();
     }
 }
