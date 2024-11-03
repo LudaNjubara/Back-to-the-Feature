@@ -365,14 +365,14 @@ public class FilesUtils {
     }
 
     /**
-     * Transforms the prefix into a standardized file name. It removes any dashes or underscores and creates a pascal case name as a single word.
+     * Transforms the prefix into a standardized file name. It removes any underscores and creates a pascal case name as a single word.
      *
      * @param prefix   the prefix
      * @return the standardized file name
      */
     private static String standardizeFileName(String prefix) {
-        // strip away any dashes or underscores and crate a pascal case name as single word
-        String[] parts = prefix.split("[_-]");
+        // strip away any underscores and crate a pascal case name as single word
+        String[] parts = prefix.split("[_]");
         StringBuilder sb = new StringBuilder();
 
         for (String part : parts) {

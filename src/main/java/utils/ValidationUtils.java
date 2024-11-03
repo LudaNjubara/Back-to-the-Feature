@@ -43,7 +43,7 @@ public class ValidationUtils {
                 throw new ValidationException("Folder name cannot start with a number");
             }
 
-            if (newFolderName.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) {
+            if (newFolderName.matches(".*[!@#$%^&*(),.?\":{}|<>-].*")) {
                 throw new ValidationException("Folder name cannot contain special characters");
             }
 
