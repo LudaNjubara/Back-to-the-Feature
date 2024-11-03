@@ -34,5 +34,9 @@ public class FeatureUtils {
 
         DirectoryUtils.createInitialDirectories(idOptions);
         DirectoryUtils.populateDirectories(pdOptions);
+
+        if (settings.automaticGitIntegration) {
+            GitUtils.addFilesToGit(project.getBasePath(), selectedDir.getVirtualFile().getPath());
+        }
     }
 }

@@ -1,11 +1,15 @@
 package dialog;
 
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.ui.JBColor;
+import exception.GitException;
 import exception.ValidationException;
 import io.sentry.Sentry;
 import lombok.Getter;
@@ -103,6 +107,16 @@ public class NewFolderDialog extends JDialog implements Dialog {
             dispose();
         } catch (ValidationException vEx) {
             Messages.showMessageDialog(project, vEx.getMessage(), "Error", Messages.getErrorIcon());
+        } catch (GitException gitEx) {
+            dispose();
+            Sentry.captureException(gitEx);
+
+            Notification notification = new Notification(
+                    "Back_to_the_Feature",
+                    gitEx.getTitle(),
+                    gitEx.getMessage(),
+                    NotificationType.WARNING);
+            Notifications.Bus.notify(notification, project);
         } catch (Exception ex) {
             try {
                 CommonUtils.revertChanges(project, newDir);

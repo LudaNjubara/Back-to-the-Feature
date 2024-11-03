@@ -1,5 +1,8 @@
 package action;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -8,6 +11,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
+import exception.GitException;
 import exception.ValidationException;
 import io.sentry.Sentry;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +50,15 @@ public class GenerateFeatureFromExistingFolderAction extends AnAction {
             FeatureUtils.generateFeature(project, selectedDir);
         } catch (ValidationException vEx) {
             Messages.showMessageDialog(project, vEx.getMessage(), "Error", Messages.getErrorIcon());
+        } catch (GitException gitEx) {
+            Sentry.captureException(gitEx);
+
+            Notification notification = new Notification(
+                    "Back_to_the_Feature",
+                    gitEx.getTitle(),
+                    gitEx.getMessage(),
+                    NotificationType.WARNING);
+            Notifications.Bus.notify(notification, project);
         } catch (Exception ex) {
             try {
                 CommonUtils.revertChanges(project, selectedDir);

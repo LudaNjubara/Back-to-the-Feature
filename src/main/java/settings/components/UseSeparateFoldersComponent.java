@@ -5,13 +5,13 @@ import settings.SettingComponent;
 
 import javax.swing.*;
 
-public class CheckboxSettingComponent extends SettingComponent {
+public class UseSeparateFoldersComponent extends SettingComponent {
     private final JCheckBox checkBox;
     private final JLabel descriptionLabel;
     private final String label;
     private final boolean initialValue;
 
-    public CheckboxSettingComponent(String label, boolean initialValue, String description) {
+    public UseSeparateFoldersComponent(String label, boolean initialValue, String description) {
         this.label = label;
         this.initialValue = initialValue;
         this.checkBox = new JCheckBox(label, initialValue);

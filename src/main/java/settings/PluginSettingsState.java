@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 )
 public class PluginSettingsState implements PersistentStateComponent<PluginSettingsState> {
     public boolean useSeparateFolders = false;
+    public boolean automaticGitIntegration = true;
 
     @Nullable
     @Override
@@ -23,6 +24,7 @@ public class PluginSettingsState implements PersistentStateComponent<PluginSetti
     @Override
     public void loadState(@NotNull PluginSettingsState state) {
         this.useSeparateFolders = state.useSeparateFolders;
+        this.automaticGitIntegration = state.automaticGitIntegration;
     }
 
     public static PluginSettingsState getInstance() {

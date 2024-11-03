@@ -3,10 +3,10 @@ package settings;
 import com.intellij.openapi.options.Configurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
-import settings.components.CheckboxSettingComponent;
+import settings.components.AutomaticGitIntegrationComponent;
+import settings.components.UseSeparateFoldersComponent;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +16,14 @@ public class PluginSettingsConfigurable implements Configurable {
 
     public PluginSettingsConfigurable() {
         PluginSettingsState settings = PluginSettingsState.getInstance();
-        settingComponents.add(new CheckboxSettingComponent(
+        settingComponents.add(new UseSeparateFoldersComponent(
                 "Use Separate Folders",
                 settings.useSeparateFolders,
                 "Generate folder for each aspect of the feature. If unchecked, generated files will be generated without accompanying parent folders."));
+        settingComponents.add(new AutomaticGitIntegrationComponent(
+                "Automatic Git Integration",
+                settings.automaticGitIntegration,
+                "Automatically add generated feature files to Git VCS."));
     }
 
     @Nls(capitalization = Nls.Capitalization.Title)
@@ -31,10 +35,12 @@ public class PluginSettingsConfigurable implements Configurable {
     @Nullable
     @Override
     public JComponent createComponent() {
-        settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        settingsPanel = new JPanel();
+        settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
 
         for (SettingComponent settingComponent : settingComponents) {
             settingsPanel.add(settingComponent.createComponent());
+            settingsPanel.add(Box.createVerticalStrut(10)); // Add vertical spacing
         }
         return settingsPanel;
     }
