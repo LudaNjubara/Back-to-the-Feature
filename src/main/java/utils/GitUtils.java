@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 public class GitUtils {
 
-    public static void addFilesToGit(String projectRootPath, String directoryPath) throws IOException, InterruptedException {
+    public static void addFilesToGit(String projectRootPath, String directoryPath) throws IOException, InterruptedException, GitException {
         File gitDir = new File(projectRootPath, ".git");
         if (gitDir.exists() || !gitDir.isDirectory()) {
             throw new GitException(
