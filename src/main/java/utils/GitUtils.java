@@ -11,7 +11,7 @@ public class GitUtils {
 
     public static void addFilesToGit(String projectRootPath, String directoryPath) throws IOException, InterruptedException, GitException {
         File gitDir = new File(projectRootPath, ".git");
-        if (gitDir.exists() || !gitDir.isDirectory()) {
+        if (!gitDir.exists() || !gitDir.isDirectory()) {
             throw new GitException(
                     "Git is not configured for the current project",
                     "Please configure Git for this project to enable automatic VCS integration with newly generated features. Check plugins' settings for additional configuration!");
